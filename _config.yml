@@ -18,20 +18,20 @@ social:
   facebook: /
   linkedin:
   instagram: /
-  github: haojen
+  github: haoranx98
 
 user:
-  name: Haojen
+  name: Haoran Xu
   avatar: /images/avatar.jpg
-  location: In the dust
-  description: May the Force be with you
+  location: Tonghua, Jilin
+  description: 绝知此事要躬行
   footnotes: # footnotes
 
 # documents: https://github.com/utterance/utterances
 # API config: https://utteranc.es/
 comment_utteranc:
   enable: true
-  repo: Haojen/Claudia-theme-blog # your blog repo
+  repo: haoranx98/haoranx98.github.io # your blog repo
 
 
 # documents: https://valine.js.org/quickstart.html
