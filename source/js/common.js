@@ -57,5 +57,61 @@ window.$claudia = {
         })
 
         callback && callback(media.matches ? 'dark' : 'light')
+    },
+    enableDraggableMusicPlayer: function () {
+        var player = document.getElementById('musicPlayer')
+        if (!player) return
+
+        var handle = player.querySelector('.music-player-handle')
+        var savedPosition = localStorage.getItem('claudia-music-player-position')
+        if (savedPosition) {
+            var position = JSON.parse(savedPosition)
+            player.style.left = position.left + 'px'
+            player.style.top = position.top + 'px'
+            player.style.right = 'auto'
+            player.style.bottom = 'auto'
+        }
+
+        handle.addEventListener('pointerdown', function (event) {
+            var bounds = player.getBoundingClientRect()
+            var offsetX = event.clientX - bounds.left
+            var offsetY = event.clientY - bounds.top
+            handle.setPointerCapture(event.pointerId)
+
+            function move(moveEvent) {
+                var left = Math.min(Math.max(0, moveEvent.clientX - offsetX), window.innerWidth - bounds.width)
+                var top = Math.min(Math.max(0, moveEvent.clientY - offsetY), window.innerHeight - bounds.height)
+                player.style.left = left + 'px'
+                player.style.top = top + 'px'
+                player.style.right = 'auto'
+                player.style.bottom = 'auto'
+            }
+
+            function end() {
+                handle.removeEventListener('pointermove', move)
+                handle.removeEventListener('pointerup', end)
+                localStorage.setItem('claudia-music-player-position', JSON.stringify({
+                    left: parseFloat(player.style.left),
+                    top: parseFloat(player.style.top)
+                }))
+            }
+
+            handle.addEventListener('pointermove', move)
+            handle.addEventListener('pointerup', end)
+        })
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    $claudia.enableDraggableMusicPlayer()
+
+    document.addEventListener('keydown', function (event) {
+        if ((event.key === '/' || (event.key.toLowerCase() === 'k' && (event.ctrlKey || event.metaKey))) && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+            var searchInput = document.getElementById('searchInput')
+            if (!searchInput) return
+            event.preventDefault()
+            searchInput.focus()
+            document.getElementById('searchButton').click()
+        }
+    })
+})

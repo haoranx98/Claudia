@@ -1,7 +1,8 @@
-@import url("//at.alicdn.com/t/font_2266068_otkvzqnxk0g.css");
+@use "common/variable" as *;
+@use "themes/theme";
+@use "widget-header";
 
-@import "common/variable";
-@import "themes/theme";
+@import url("//at.alicdn.com/t/font_2266068_otkvzqnxk0g.css");
 
 :root {
 
@@ -40,6 +41,45 @@
       background: var(--third-bg-color);
     }
 
+    .music-player {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 20;
+      width: 330px;
+      max-width: calc(100vw - 2rem);
+      border: 1px solid var(--border-line-color);
+      border-radius: $borderRadius;
+      background: var(--pre-code-bg-color);
+      box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .16);
+    }
+
+    .music-player-handle {
+      display: block;
+      width: 100%;
+      padding: .35rem .75rem;
+      color: var(--second-text-color);
+      font: inherit;
+      font-size: .75rem;
+      text-align: left;
+      cursor: grab;
+      border: 0;
+      border-radius: $borderRadius $borderRadius 0 0;
+      background: var(--third-bg-color);
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+
+    .music-player-frame {
+      display: block;
+      width: 100%;
+      max-width: 330px;
+      height: 110px;
+      border-radius: 0 0 $borderRadius $borderRadius;
+    }
+
     > main {
       flex-grow: 2;
       flex-basis: 0;
@@ -57,5 +97,3 @@
     }
   }
 }
-
-@import "widget-header";

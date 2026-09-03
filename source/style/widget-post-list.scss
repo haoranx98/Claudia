@@ -1,4 +1,4 @@
-@import "common/variable";
+@use "common/variable" as *;
 $avatarSize: 180px;
 $coverMaxHeight: 360px;
 $coverBlurEffect: 20px;
@@ -174,13 +174,20 @@ $coverBlurEffect: 20px;
     }
 
     .sns-container {
-      overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       padding: 5px 0;
       margin-top: 15px;
       border-top: 1px solid var(--border-line-color);
 
+      a {
+        flex: 0 0 25%;
+        text-align: center;
+      }
+
       i {
-        margin: 0 8px;
+        margin: 4px 0;
         font-size: 30px;
       }
     }

@@ -50,6 +50,14 @@ comment_disqus:
 # user-can-set
 appearance: auto # Default value is auto
 
+# Render inline ($...$) and block ($$...$$) LaTeX formulas with MathJax 3.
+mathjax:
+  enable: true
+
+# Render ```mermaid code blocks as diagrams.
+mermaid:
+  enable: true
+
 # Miscellaneous
 favicon: /images/favicon.png
 

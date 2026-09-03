@@ -1,4 +1,4 @@
-@import "common/variable";
+@use "common/variable" as *;
 
 $lineColor: var(--border-line-color);
 
@@ -55,6 +55,165 @@ $lineColor: var(--border-line-color);
       background: var(--third-bg-color);
     }
 
+    figure.highlight {
+      position: relative;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      text-align: left;
+      border: 1px solid $lineColor;
+      border-radius: $borderRadius;
+      background: var(--pre-code-bg-color);
+
+      table {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      pre {
+        margin: 0;
+        padding: 1rem 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .gutter {
+        width: 1%;
+        padding: 0 1rem;
+        user-select: none;
+        color: var(--second-text-color);
+        border-right: 1px solid $lineColor;
+      }
+
+      .code {
+        width: 99%;
+        padding: 0 1rem;
+      }
+
+      .code-language {
+        position: absolute;
+        top: .5rem;
+        right: 4.5rem;
+        z-index: 1;
+        padding: .1rem .5rem;
+        color: var(--second-text-color);
+        font-family: monospace;
+        font-size: .75rem;
+        line-height: 1.25;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        border-radius: 999px;
+        background: var(--third-bg-color);
+      }
+
+      .copy-code {
+        position: absolute;
+        top: .5rem;
+        right: .75rem;
+        z-index: 1;
+        padding: .1rem .5rem;
+        color: var(--second-text-color);
+        font-family: inherit;
+        font-size: .75rem;
+        line-height: 1.25;
+        cursor: pointer;
+        border: 0;
+        border-radius: 999px;
+        background: var(--third-bg-color);
+
+        &:hover {
+          color: $activeColor;
+        }
+      }
+
+      .line {
+        min-height: 1.5em;
+      }
+    }
+
+    .mermaid-diagram {
+      position: relative;
+      margin: 1.5rem 0;
+      padding: 2.75rem 1rem 1rem;
+      overflow-x: auto;
+      text-align: center;
+      border: 1px solid $lineColor;
+      border-radius: $borderRadius;
+      background: var(--pre-code-bg-color);
+
+      svg {
+        max-width: 100%;
+      }
+
+      .mermaid-copy-menu {
+        position: absolute;
+        top: .5rem;
+        right: .75rem;
+        z-index: 2;
+      }
+
+      .mermaid-copy-toggle,
+      .mermaid-copy-option {
+        padding: .35rem .6rem;
+        color: var(--second-text-color);
+        font-family: inherit;
+        font-size: .75rem;
+        line-height: 1.25;
+        cursor: pointer;
+        border: 0;
+        background: var(--third-bg-color);
+
+        &:hover {
+          color: $activeColor;
+        }
+      }
+
+      .mermaid-copy-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        padding: 0;
+        border-radius: 999px;
+
+        svg {
+          width: 1rem;
+          height: 1rem;
+          fill: none;
+          stroke: currentColor;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-width: 1.75;
+        }
+      }
+
+      .mermaid-copy-options {
+        position: absolute;
+        top: calc(100% + .35rem);
+        right: 0;
+        display: none;
+        min-width: 10rem;
+        padding: .25rem;
+        text-align: left;
+        border: 1px solid $lineColor;
+        border-radius: $borderRadius;
+        background: var(--pre-code-bg-color);
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
+      }
+
+      .mermaid-copy-menu.is-open .mermaid-copy-options {
+        display: grid;
+      }
+
+      .mermaid-copy-option {
+        width: 100%;
+        text-align: left;
+        border-radius: 4px;
+      }
+    }
+
     pre {
       padding: 0;
       background: transparent;
@@ -66,8 +225,32 @@ $lineColor: var(--border-line-color);
       }
     }
 
-    .hljs {
+    .hljs,
+    figure.highlight {
       color: var(--second-text-color);
+    }
+
+    figure.highlight .comment { color: #6a737d; }
+    figure.highlight .keyword,
+    figure.highlight .selector-tag,
+    figure.highlight .title { color: var(--code-keyword-color); }
+    figure.highlight .string,
+    figure.highlight .attr,
+    figure.highlight .attribute { color: var(--code-string-color); }
+    figure.highlight .number,
+    figure.highlight .literal,
+    figure.highlight .built_in { color: var(--code-number-color); }
+
+    // Hexo token class names overlap with Bulma typography utilities.
+    figure.highlight .title,
+    figure.highlight .function_,
+    figure.highlight .number {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
     }
 
     img {

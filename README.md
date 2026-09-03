@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <img  alt="Hexo version" src="https://img.shields.io/badge/hexo%20version-%3E%3D%204.2-brightgreen">
+  <img  alt="Hexo version" src="https://img.shields.io/badge/hexo%20version-%3E%3D%208.1-brightgreen">
   <img  alt="Build blog" src="https://github.com/Haojen/Claudia-theme-blog/workflows/Build%20Claudia%20blog/badge.svg?branch=master">
   <img  alt="GitHub issues" src="https://img.shields.io/github/issues/Haojen/hexo-theme-Claudia">
   <img  alt="GitHub license" src="https://img.shields.io/github/license/Haojen/hexo-theme-Claudia">
@@ -26,16 +26,18 @@
 
 ## How to Use
 
+### Runtime requirements
+
+This theme targets the current Hexo 8 release line and requires Node.js 20.19.0 or newer with npm 10.8.2 or newer.
+
 ### Install depend
 
 Install to Hexo blog root directory, **Not theme directory** 
 ```bash
-npm install hexo-renderer-pug 
-npm install hexo-renderer-sass
-npm install hexo-generator-search
+npm install --save hexo@^8.1.2 hexo-renderer-pug@^3.0.0 hexo-renderer-dartsass@^1.2.0 hexo-generator-search@^2.4.3
 
 # if you need RSS, you must be install this plugin
-npm install hexo-generator-feed
+npm install --save hexo-generator-feed@^4.0.0
 ```
 
 ### User's profile
@@ -117,6 +119,33 @@ appearance: auto
 
 ```yaml
 highlight:
+  enable: false
+```
+
+### Math formulas
+
+MathJax is enabled by default. Use `$...$` for inline formulas and `$$...$$` for block formulas. Disable it in the theme configuration when it is not needed:
+
+```yaml
+mathjax:
+  enable: false
+```
+
+### Mermaid diagrams
+
+Mermaid is enabled by default. Use a `mermaid` fenced code block in a post:
+
+````markdown
+```mermaid
+flowchart LR
+  Write --> Generate --> Publish
+```
+````
+
+Disable it in the theme configuration when it is not needed:
+
+```yaml
+mermaid:
   enable: false
 ```
 

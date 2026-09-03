@@ -1,9 +1,22 @@
 {
   "name": "hexo-theme-claudia",
   "version": "2.0.0",
+  "description": "A concise, responsive Hexo theme with automatic light and dark mode support",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haojen/hexo-theme-Claudia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Haojen/hexo-theme-Claudia/issues"
+  },
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=10.8.2"
+  },
   "peerDependencies": {
-    "hexo": "^5.0.2",
-    "hexo-renderer-pug": "^1.0.0",
-    "hexo-renderer-sass": "^0.4.0"
+    "hexo": ">=8.1.2",
+    "hexo-renderer-pug": ">=3.0.0",
+    "hexo-renderer-dartsass": ">=1.2.0"
   }
 }

@@ -1,8 +1,26 @@
 extends widget/base
 block append head
+  - var hasMermaid = /(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|gantt|pie|gitGraph|mindmap|timeline|journey|quadrantChart|sankey)/.test(page.content)
+  - var hasMath = /\$\$|\\\(|\\\[|(^|[^\\$])\$[^$]+\$/.test(page.content)
   link(rel='stylesheet', href= url_for('/style/post.css'))
   link(rel='stylesheet', href= url_for('/style/themes/highlight-theme-light.css'))
   script(src= url_for("/js/highlight.pack.js"))
+  if theme.mermaid && theme.mermaid.enable && hasMermaid
+    script(src='https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js')
+    script.
+      mermaid.initialize({ startOnLoad: false, theme: document.documentElement.classList.contains('appearance-dark') ? 'dark' : 'default' });
+  if theme.mathjax && theme.mathjax.enable && hasMath
+    script.
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    script(async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js')
   meta(name="description", content=truncate( strip_html(page.content), {length: 360, omission: '..'} ))
   if theme.comment_valine && theme.comment_valine.enable
       script(src="//unpkg.com/valine/dist/Valine.min.js")
@@ -14,6 +32,13 @@ block topic
 
 block content
     - var tocContent = toc(page.content, {list_number: false})
+    - var plainContent = strip_html(page.content).replace(/\s+/g, ' ').trim()
+    - var readingMinutes = Math.max(1, Math.ceil(plainContent.length / 500))
+    .reading-progress#readingProgress(aria-hidden='true')
+    if tocContent.length > 0
+        details.mobile-toc.is-hidden-tablet
+            summary Contents
+            != tocContent
     main.container.is-max-widescreen.content.section.post-page.pt-4.px-4
         .columns.is-flex-desktop.is-justify-content-center.is-flex-direction-row-reverse
             .column.is-3.is-hidden-mobile(class= tocContent.length < 1 && 'is-hidden')!= tocContent
@@ -26,6 +51,10 @@ block content
                 h1.mt-0.mb-1.is-family-serif#postTitle= page.title
                 if page.date
                     time.has-text-grey(datetime=page.date.toJSON())= date(page.date, date_format)
+                .post-meta.has-text-grey
+                    span= readingMinutes + ' min read'
+                    if page.updated && page.updated.valueOf() !== page.date.valueOf()
+                        span= ' Updated ' + date(page.updated, date_format)
                 article.mt-2.post-content!= page.content
                 section.jump-container.is-flex.is-justify-content-space-between.my-6
                     // em is empty placeholder
@@ -42,15 +71,12 @@ block content
                             span.has-text-weight-semibold= nextContent
                             i.iconfont.icon-next.ml-2.has-text-grey
                 if theme.comment_utteranc && theme.comment_utteranc.enable
-                    article.mt-6.comment-container
-                        script(
-                            async
-                            repo= theme.comment_utteranc.repo
-                            src= "https://utteranc.es/client.js"
-                            label= theme.comment_utteranc.label
-                            issue-term= theme.comment_utteranc.issue_term || "pathname"
-                            theme= theme.comment_utteranc.theme || "preferred-color-scheme"
-                        )
+                    article.mt-6.comment-container#utterances(
+                        data-repo= theme.comment_utteranc.repo
+                        data-label= theme.comment_utteranc.label
+                        data-issue-term= theme.comment_utteranc.issue_term || 'pathname'
+                        data-theme= theme.comment_utteranc.theme || 'preferred-color-scheme'
+                    )
                 if theme.comment_valine && theme.comment_valine.enable
                     article.mt-6.comment-container#vcomments(
                         data-comment_valine_id= theme.comment_valine.appId
