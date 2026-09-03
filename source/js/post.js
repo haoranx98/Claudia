@@ -254,8 +254,8 @@ var $posts = {
         if (!window.mermaid) return
 
         var diagrams = []
-        document.querySelectorAll('.post-content figure.highlight').forEach(function (block, index) {
-            var code = block.querySelector('.code').innerText
+        document.querySelectorAll('.post-content figure.highlight, .post-content pre > code.highlight').forEach(function (block, index) {
+            var code = block.querySelector('.code') ? block.querySelector('.code').innerText : block.innerText
             var isMermaid = block.classList.contains('mermaid') || /^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|gantt|pie|gitGraph|mindmap|timeline|journey|quadrantChart|sankey)/m.test(code.trim())
             if (!isMermaid) return
 
@@ -264,7 +264,7 @@ var $posts = {
             diagram.id = 'mermaid-diagram-' + index
             diagram.textContent = code
             diagram.dataset.mermaidSource = code
-            block.replaceWith(diagram)
+            ;(block.matches('code.highlight') ? block.parentElement : block).replaceWith(diagram)
             diagrams.push(diagram)
         })
 
