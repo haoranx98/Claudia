@@ -61,6 +61,7 @@ window.$claudia = {
     enableDraggableMusicPlayer: function () {
         var player = document.getElementById('musicPlayer')
         if (!player) return
+        if (player.classList.contains('article-music-player')) return
 
         var handle = player.querySelector('.music-player-handle')
         var savedPosition = localStorage.getItem('claudia-music-player-position')

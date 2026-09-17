@@ -1,0 +1,112 @@
+@use "common/variable" as *;
+
+.graph-page {
+  min-height: calc(100vh - 120px);
+
+  .graph-header {
+    margin-bottom: 1rem;
+  }
+
+  .graph-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+    margin-bottom: .75rem;
+
+    input,
+    button {
+      min-height: 2.25rem;
+      padding: .4rem .75rem;
+      color: var(--second-text-color);
+      font: inherit;
+      border: 1px solid var(--border-line-color);
+      border-radius: $borderRadius;
+      background: var(--third-bg-color);
+    }
+
+    input {
+      flex: 1 1 16rem;
+      min-width: 12rem;
+      outline: none;
+    }
+
+    button {
+      cursor: pointer;
+
+      &:hover,
+      &.is-active {
+        color: $activeColor;
+        border-color: $activeColor;
+      }
+    }
+  }
+
+  .graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: .75rem;
+    color: var(--second-text-color);
+    font-size: .85rem;
+  }
+
+  .graph-legend-item::before {
+    display: inline-block;
+    width: .65rem;
+    height: .65rem;
+    margin-right: .35rem;
+    content: '';
+    border-radius: 50%;
+    background: var(--graph-post-color);
+  }
+
+  .graph-legend-item[data-type='tag']::before { background: var(--graph-tag-color); }
+  .graph-legend-item[data-type='external']::before { background: var(--graph-external-color); }
+
+  .graph-canvas {
+    position: relative;
+    height: min(70vh, 720px);
+    min-height: 420px;
+    overflow: hidden;
+    cursor: grab;
+    border: 1px solid var(--border-line-color);
+    border-radius: $borderRadius;
+    background: var(--second-bg-color);
+    touch-action: none;
+
+    &:active { cursor: grabbing; }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .graph-edge {
+      stroke: var(--border-line-color);
+      stroke-width: 1.2;
+    }
+
+    .graph-node {
+      cursor: pointer;
+
+      circle {
+        stroke: var(--second-bg-color);
+        stroke-width: 2;
+      }
+
+      text {
+        fill: var(--second-text-color);
+        font-size: 12px;
+        pointer-events: none;
+      }
+
+      &:hover circle { stroke: $activeColor; }
+    }
+
+    .graph-node[data-type='post'] circle { fill: var(--graph-post-color); }
+    .graph-node[data-type='tag'] circle { fill: var(--graph-tag-color); }
+    .graph-node[data-type='external'] circle { fill: var(--graph-external-color); }
+  }
+}

@@ -27,4 +27,10 @@ user_name: 'User name'
 click_back_to_the_top: 'Click back to the top'
 
 search_input_placeholder: 'Search everything..'
-
+knowledge_graph: 'Knowledge Graph'
+knowledge_graph_description: 'Explore connections between posts, tags, and external resources.'
+graph_search_placeholder: 'Filter graph..'
+external_link: 'External link'
+external_links: 'External links'
+reset_graph: 'Reset view'
+article_graph: 'Article links'

@@ -1,0 +1,73 @@
+extends widget/base
+
+block append head
+  link(rel='stylesheet', href= url_for('/style/graph.css'))
+
+block content
+  - var nodes = []
+  - var edges = []
+  - var nodeIds = {}
+  - var externalIds = {}
+  - var posts = site.posts.toArray()
+  - function addNode(id, type, label, url) {
+  -   if (!nodeIds[id]) {
+  -     nodeIds[id] = true
+  -     nodes.push({ id: id, type: type, label: label, url: url || '' })
+  -   }
+  - }
+  - posts.forEach(function (post) {
+  -   var postId = 'post:' + post.path
+  -   addNode(postId, 'post', post.title || post.path, url_for(post.path))
+  - })
+  - posts.forEach(function (post) {
+  -   var postId = 'post:' + post.path
+  -   if (post.tags) {
+  -     post.tags.toArray().forEach(function (tag) {
+  -       var tagId = 'tag:' + tag.name
+  -       addNode(tagId, 'tag', tag.name, url_for('/tags/' + tag.name))
+  -       edges.push({ source: postId, target: tagId })
+  -     })
+  -   }
+  -   var links = (post.content.match(/href=["']([^"']+)["']/g) || [])
+  -   links.forEach(function (rawLink) {
+  -     var href = rawLink.replace(/^href=["']|["']$/g, '')
+  -     if (!/^https?:\/\//.test(href)) return
+  -     var externalId = externalIds[href]
+  -     if (!externalId) {
+  -       externalId = externalIds[href] = 'external:' + Object.keys(externalIds).length
+  -       addNode(externalId, 'external', href.replace(/^https?:\/\//, '').split('/')[0], href)
+  -     }
+  -     edges.push({ source: postId, target: externalId })
+  -   })
+  - })
+  - posts.forEach(function (post) {
+  -   var sourceId = 'post:' + post.path
+  -   posts.forEach(function (target) {
+  -     if (post.path === target.path) return
+  -     var targetPath = url_for(target.path)
+  -     if (post.content.indexOf('href="' + targetPath + '"') > -1 || post.content.indexOf("href='" + targetPath + "'") > -1) {
+  -       edges.push({ source: sourceId, target: 'post:' + target.path })
+  -     }
+  -   })
+  - })
+  - var graphData = JSON.stringify({ nodes: nodes, edges: edges }).replace(/</g, '\\u003c')
+  main.graph-page.container.is-max-widescreen.section
+    header.graph-header
+      h1= __('knowledge_graph')
+      p.has-text-grey= __('knowledge_graph_description')
+    .graph-toolbar
+      input#graphSearch(type='search' placeholder= __('graph_search_placeholder'))
+      button.graph-filter.is-active(type='button' data-filter='all')= __('all')
+      button.graph-filter(type='button' data-filter='post')= __('post', 2)
+      button.graph-filter(type='button' data-filter='tag')= __('tag', 2)
+      button.graph-filter(type='button' data-filter='external')= __('external_links')
+      button#graphReset(type='button')= __('reset_graph')
+    .graph-legend
+      span.graph-legend-item(data-type='post')= __('post', 1)
+      span.graph-legend-item(data-type='tag')= __('tag', 1)
+      span.graph-legend-item(data-type='external')= __('external_link')
+    #knowledgeGraph.graph-canvas(role='img' aria-label='Knowledge graph')
+    script#knowledgeGraphData(type='application/json')!= graphData
+
+block append script
+  script(src= url_for('/js/graph.js'))

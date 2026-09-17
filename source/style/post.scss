@@ -48,6 +48,83 @@ $lineColor: var(--border-line-color);
 }
 
 .post-page {
+  .article-sidebar {
+    position: sticky;
+    top: 60px;
+    height: fit-content;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .toc {
+      position: static;
+      height: auto;
+      max-height: none;
+    }
+
+    .article-music-player {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      max-width: 330px;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .article-graph-panel {
+    margin-top: 1.5rem;
+    padding: .75rem;
+    border: 1px solid $lineColor;
+    border-radius: $borderRadius;
+    background: var(--second-bg-color);
+
+    h3 {
+      margin-bottom: .5rem;
+      color: var(--primary-text-color);
+      font-size: 1rem;
+    }
+  }
+
+  .article-graph-canvas {
+    height: 220px;
+    overflow: hidden;
+    cursor: grab;
+    border-radius: $borderRadius;
+    background: var(--third-bg-color);
+    touch-action: none;
+
+    &:active { cursor: grabbing; }
+
+    svg { display: block; width: 100%; height: 100%; }
+
+    .article-graph-edge {
+      stroke: var(--border-line-color);
+      stroke-width: 1.2;
+    }
+
+    .article-graph-node {
+      cursor: pointer;
+
+      circle {
+        fill: var(--graph-post-color);
+        stroke: var(--second-bg-color);
+        stroke-width: 2;
+      }
+
+      &.is-current circle { fill: $activeColor; }
+
+      text {
+        fill: var(--second-text-color);
+        font-size: 10px;
+        pointer-events: none;
+      }
+    }
+  }
+
   .post-content {
 
     code {
@@ -167,6 +244,24 @@ $lineColor: var(--border-line-color);
         &:hover {
           color: $activeColor;
         }
+      }
+
+      .mermaid-error {
+        margin-bottom: .75rem;
+        color: #c0392b;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .mermaid-source {
+        margin: 0;
+        padding: 1rem;
+        overflow-x: auto;
+        color: var(--second-text-color);
+        text-align: left;
+        border: 1px solid $lineColor;
+        border-radius: $borderRadius;
+        background: var(--third-bg-color);
       }
 
       .mermaid-copy-toggle {

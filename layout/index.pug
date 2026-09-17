@@ -7,13 +7,13 @@ block content
     include widget/widget-post-list
         block sidebar
             include widget/widget-search
-            if theme.widgets.includes('profile')
+            if widgets.includes('profile')
                 include widget/widget-profile
-            if theme.widgets.includes('recent_posts')
+            if widgets.includes('recent_posts')
                 include widget/widget-recent
-            if theme.widgets.includes('category') && site.categories.length > 0
+            if widgets.includes('category') && site.categories.length > 0
                 include widget/widget-categories
-            if theme.widgets.includes('archive')
+            if widgets.includes('archive')
                 include widget/widget-archives
-            if theme.widgets.includes('tag') && site.tags.length > 0
+            if widgets.includes('tag') && site.tags.length > 0
                 include widget/widget-tag

@@ -251,8 +251,6 @@ var $posts = {
         })
     },
     renderMermaid: function () {
-        if (!window.mermaid) return
-
         var diagrams = []
         document.querySelectorAll('.post-content figure.highlight, .post-content pre > code.highlight').forEach(function (block, index) {
             var code = block.querySelector('.code') ? block.querySelector('.code').innerText : block.innerText
@@ -268,8 +266,29 @@ var $posts = {
             diagrams.push(diagram)
         })
 
-        if (diagrams.length) {
-            mermaid.run({ nodes: diagrams }).then(function () {
+        function showFallback(diagram, message) {
+            var source = diagram.dataset.mermaidSource
+            diagram.innerHTML = ''
+
+            var error = document.createElement('div')
+            error.className = 'mermaid-error'
+            error.textContent = message
+
+            var code = document.createElement('pre')
+            code.className = 'mermaid-source'
+            code.textContent = source
+            diagram.append(error, code)
+        }
+
+        if (!diagrams.length) return
+        if (!window.mermaid) {
+            diagrams.forEach(function (diagram) {
+                showFallback(diagram, 'Mermaid could not be loaded. Showing source code instead.')
+            })
+            return
+        }
+
+        mermaid.run({ nodes: diagrams }).then(function () {
                 diagrams.forEach(function (diagram) {
                     var menu = document.createElement('div')
                     menu.className = 'mermaid-copy-menu'
@@ -349,8 +368,11 @@ var $posts = {
                     menu.append(toggle, options)
                     diagram.append(menu)
                 })
+            }).catch(function (error) {
+                var message = 'Mermaid could not render this diagram. Showing source code instead.'
+                diagrams.forEach(function (diagram) { showFallback(diagram, message) })
+                if (window.console) console.error(error)
             })
-        }
     },
     loadUtterances: function () {
         var container = document.getElementById('utterances')

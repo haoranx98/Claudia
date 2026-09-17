@@ -149,6 +149,17 @@ mermaid:
   enable: false
 ```
 
+### Knowledge graph
+
+The theme automatically generates a `/graph/` page. It visualizes posts, tags, internal post links, and external links. Add `Graph: /graph` to the theme menu to expose it in the navigation:
+
+```yaml
+menu:
+  Graph: /graph
+```
+
+Posts and tags become connected nodes. Links between posts create post-to-post edges, while external URLs are shown as external resource nodes. The graph supports filtering, search, zooming, panning, dragging nodes, and clicking nodes to open them.
+
 ## Analytics
 Google Analytics and Baidu Analytics simple config:
 ```yaml

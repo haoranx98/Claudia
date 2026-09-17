@@ -3,6 +3,7 @@ menu:
   Home: /
   About: /about
   Archive: /archives
+  Graph: /graph
 
 widgets:
   - tag
