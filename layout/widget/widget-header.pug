@@ -9,9 +9,9 @@ header.header-widget.is-flex-shrink-0.is-hidden-mobile
             if themeConfig.menu
                 each url, label in themeConfig.menu
                     h3.is-inline-block
-                        a(href= url_for(url))= label && _p(label.toLowerCase())
+                        a(href= url_for(url))= label === 'RSS' || label === 'Graph' ? label : label && _p(label.toLowerCase())
 header.is-flex.header-widget.is-flex-shrink-0.is-align-items-center.is-justify-content-center.is-hidden-tablet
         if themeConfig.menu
             each url, label in themeConfig.menu
                 h3.is-inline-block
-                    a(href= url_for(url))= label && _p(label.toLowerCase())
+                    a(href= url_for(url))= label === 'RSS' || label === 'Graph' ? label : label && _p(label.toLowerCase())

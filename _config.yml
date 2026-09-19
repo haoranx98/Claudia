@@ -3,6 +3,7 @@ menu:
   Home: /
   About: /about
   Archive: /archives
+  RSS: /atom.xml
   Graph: /graph
 
 widgets:
