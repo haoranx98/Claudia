@@ -77,7 +77,9 @@ window.$claudia = {
                 var nextAppearance = appearance === 'dark' ? 'light' : 'dark'
                 toggle.title = 'Switch to ' + nextAppearance + ' mode'
                 toggle.setAttribute('aria-label', 'Switch to ' + nextAppearance + ' mode')
-                toggle.querySelector('span').textContent = appearance === 'dark' ? '☀' : '☾'
+                var icon = toggle.querySelector('.theme-toggle-icon')
+                icon.classList.toggle('fa-sun', appearance === 'dark')
+                icon.classList.toggle('fa-moon', appearance !== 'dark')
             })
         }
 

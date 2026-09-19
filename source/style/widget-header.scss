@@ -50,16 +50,14 @@
   opacity: .58;
   transition: opacity .2s ease, transform .2s ease;
 
-  span {
+  .theme-toggle-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 50%;
-    color: var(--primary-bg-color);
-    background: var(--primary-text-color);
-    font-size: 1.25rem;
+    width: auto;
+    height: auto;
+    color: inherit;
+    font-size: 1.4rem;
     line-height: 1;
   }
 
