@@ -13,6 +13,14 @@ widgets:
   - category
   - profile
 
+# friend links shown below the tag widget on the home page
+friend_links_title: 友情链接
+friend_links:
+  - name: 狂且的人文及技术博客
+    url: https://blog.kuangjux.top/
+  - name: rmheng
+    url: https://rmheng.github.io/
+
 # social config
 social:
   zhihu: people/haoranx98
@@ -69,4 +77,5 @@ ga_domain:
 ba_track_id:
 
 # picture of about page
-about_pic: about.png
+about_pic: /images/avatar.jpg
+

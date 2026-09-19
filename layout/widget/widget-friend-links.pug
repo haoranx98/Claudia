@@ -1,0 +1,9 @@
+main.aside-card-container.friend-links-widget
+    h3= themeConfig.friend_links_title || '友情链接'
+    if themeConfig.friend_links && themeConfig.friend_links.length > 0
+        ul
+            each link in themeConfig.friend_links
+                li
+                    a(href=link.url target='_blank' rel='noopener nofollow')= link.name
+    else
+        p.friend-links-empty 暂无友情链接
