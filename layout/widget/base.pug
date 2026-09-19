@@ -62,6 +62,9 @@ html(lang=config.language class= `appearance-${ appearance }`)
     block head
   body.is-flex.is-flex-direction-column
     include widget-header
+    if themeConfig.appearance === 'user-can-set'
+      button.theme-toggle(type='button' aria-label='Toggle color theme' title='Toggle color theme')
+        span(aria-hidden='true') ☾
     main
       block content
     if !is_post()
