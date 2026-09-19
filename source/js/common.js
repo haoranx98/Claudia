@@ -58,6 +58,41 @@ window.$claudia = {
 
         callback && callback(media.matches ? 'dark' : 'light')
     },
+    enableAppearanceToggle: function () {
+        var toggles = document.querySelectorAll('.theme-toggle')
+        if (!toggles.length) return
+
+        var root = document.documentElement
+
+        function currentAppearance() {
+            if (root.classList.contains('appearance-dark')) return 'dark'
+            if (root.classList.contains('appearance-light')) return 'light'
+            return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+
+        function applyAppearance(appearance) {
+            root.classList.remove('appearance-auto', 'appearance-light', 'appearance-dark')
+            root.classList.add('appearance-' + appearance)
+            toggles.forEach(function (toggle) {
+                var nextAppearance = appearance === 'dark' ? 'light' : 'dark'
+                toggle.title = 'Switch to ' + nextAppearance + ' mode'
+                toggle.setAttribute('aria-label', 'Switch to ' + nextAppearance + ' mode')
+                toggle.querySelector('span').textContent = appearance === 'dark' ? '☀' : '☾'
+            })
+        }
+
+        toggles.forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                var nextAppearance = currentAppearance() === 'dark' ? 'light' : 'dark'
+                applyAppearance(nextAppearance)
+                try {
+                    localStorage.setItem('claudia-appearance', nextAppearance)
+                } catch (error) {}
+            })
+        })
+
+        applyAppearance(currentAppearance())
+    },
     enableDraggableMusicPlayer: function () {
         var player = document.getElementById('musicPlayer')
         if (!player) return
@@ -104,6 +139,7 @@ window.$claudia = {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    $claudia.enableAppearanceToggle()
     $claudia.enableDraggableMusicPlayer()
 
     document.addEventListener('keydown', function (event) {
