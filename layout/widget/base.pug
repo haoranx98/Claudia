@@ -64,8 +64,7 @@ html(lang=config.language class= `appearance-${ appearance }`)
     include widget-header
     if themeConfig.appearance === 'user-can-set'
       button.theme-toggle(type='button' aria-label='Toggle color theme' title='Toggle color theme')
-        span.theme-toggle-icon(aria-hidden='true')
-          i.fa-solid.fa-moon
+        span.theme-symbol(aria-hidden='true')
     main
       block content
     if !is_post()
