@@ -65,6 +65,10 @@ html(lang=config.language class= `appearance-${ appearance }`)
     if themeConfig.appearance === 'user-can-set'
       button.theme-toggle(type='button' aria-label='Toggle color theme' title='Toggle color theme')
         span.theme-symbol(aria-hidden='true')
+    button#back-to-top(type='button' aria-label='Back to top' title='Back to top' aria-hidden='true')
+      svg(viewBox='0 0 64 80' aria-hidden='true')
+        path.rocket-body(d='M32 3 C22 13 18 25 18 39 L18 49 L10 58 L14 72 L25 64 L32 68 L39 64 L50 72 L54 58 L46 49 L46 39 C46 25 42 13 32 3Z')
+        circle.rocket-window(cx='32' cy='28' r='6')
     main
       block content
     if !is_post()

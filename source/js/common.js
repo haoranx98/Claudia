@@ -92,6 +92,22 @@ window.$claudia = {
 
         applyAppearance(currentAppearance())
     },
+    enableBackToTop: function () {
+        var button = document.getElementById('back-to-top')
+        if (!button) return
+
+        function updateVisibility() {
+            var isVisible = window.scrollY > 300
+            button.classList.toggle('show', isVisible)
+            button.setAttribute('aria-hidden', String(!isVisible))
+        }
+
+        window.addEventListener('scroll', updateVisibility, { passive: true })
+        button.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        })
+        updateVisibility()
+    },
     enableDraggableMusicPlayer: function () {
         var player = document.getElementById('musicPlayer')
         if (!player) return
@@ -139,6 +155,7 @@ window.$claudia = {
 
 document.addEventListener('DOMContentLoaded', function () {
     $claudia.enableAppearanceToggle()
+    $claudia.enableBackToTop()
     $claudia.enableDraggableMusicPlayer()
 
     document.addEventListener('keydown', function (event) {
